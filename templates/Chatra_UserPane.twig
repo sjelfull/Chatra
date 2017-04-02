@@ -1,0 +1,35 @@
+{#
+/**
+ * Chatra plugin for Craft CMS
+ *
+ * Chatra_UserPane.twig
+ *
+ * @author    Superbig
+ * @copyright Copyright (c) 2016 Superbig
+ * @link      https://superbig.co
+ * @package   Chatra
+ * @since     1.0.0
+ */
+#}
+{% import "_includes/forms" as forms %}
+
+<div class="pane chatra-user-pane">
+    <h3>Chatra</h3>
+    {% if clientId %}
+        <p>Send message to user</p>
+
+        <form action="" id="js-chatraMessageForm" class="chatra-form">
+            {{ forms.textField({
+                label: "Message"|t,
+                instructions: '',
+                id: 'chatraMessage',
+                name: 'chatraMessage',
+            }) }}
+
+            <input type="submit" class="btn" value="{{ 'Send message'|t }}">
+        </form>
+    {% else %}
+        <p>The user doesn't have a associated Chatra client id yet.</p>
+        {# TODO: Generate one #}
+    {% endif %}
+</div>

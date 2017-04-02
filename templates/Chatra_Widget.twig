@@ -1,0 +1,44 @@
+{#
+/**
+ * Chatra plugin for Craft CMS
+ *
+ * Chatra_Widget.twig
+ *
+ * @author    Superbig
+ * @copyright Copyright (c) 2016 Superbig
+ * @link      https://superbig.co
+ * @package   Chatra
+ * @since     1.0.0
+ */
+#}
+<!-- Chatra {literal} -->
+<script>
+    {% if currentUser %}
+        window.ChatraIntegration = {
+            // main fields
+            name: '{{ currentUser.getName() }}',
+            email: '{{ currentUser.email }}'
+            //phone: '+41-22-765-5749',
+            //notes: 'Looking for courage...',
+
+            // custom fields
+            //'What does he do': 'Goes to Oz with his friends'
+        };
+    {% endif %}
+
+    window.ChatraSetup = {{ chatraSetup }}
+
+    ChatraID = '{{ chatraId }}';
+    (function (d, w, c) {
+        var n = d.getElementsByTagName('script')[0],
+                s = d.createElement('script');
+        w[c] = w[c] || function () {
+                    (w[c].q = w[c].q || []).push(arguments);
+                };
+        s.async = true;
+        s.src = (d.location.protocol === 'https:' ? 'https:' : 'http:')
+                + '//call.chatra.io/chatra.js';
+        n.parentNode.insertBefore(s, n);
+    })(document, window, 'Chatra');
+</script>
+<!-- /Chatra {/literal} -->

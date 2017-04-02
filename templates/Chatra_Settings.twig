@@ -1,0 +1,41 @@
+{#
+/**
+ * Chatra plugin for Craft CMS
+ *
+ * Chatra Settings.twig
+ *
+ * @author    Superbig
+ * @copyright Copyright (c) 2016 Superbig
+ * @link      https://superbig.co
+ * @package   Chatra
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% includeCssResource "chatra/css/Chatra_Style.css" %}
+{% includeJsResource "chatra/js/Chatra_Script.js" %}
+
+{{ forms.textField({
+    label: 'Public API key',
+    instructions: 'Get your public API key from [the control panel](https://app.chatra.io/settings/general?enroll=&partnerId=eM2oGJzP3nzFXc4ua)',
+    id: 'publicApiKey',
+    name: 'publicApiKey',
+    value: settings['publicApiKey']}) }}
+
+{{ forms.textField({
+    label: 'Secret API key',
+    instructions: 'Get your Chatra User ID from [the control panel](https://app.chatra.io/settings/general?enroll=&partnerId=eM2oGJzP3nzFXc4ua)',
+    id: 'secretApiKey',
+    name: 'secretApiKey',
+    value: settings['secretApiKey']}) }}
+
+{#
+{{ forms.lightswitchField({
+    label: 'Create client ID for logged in user',
+    instructions: 'Logged in users will get a unique client ID assigned to them. Read more',
+    id: 'createClientIdForLoggedInUser',
+    name: 'createClientIdForLoggedInUser',
+    on: settings['createClientIdForLoggedInUser']}) }}
+#}
