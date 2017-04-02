@@ -5,7 +5,7 @@ Integrate Chatra easily with Craft.
 # About Chatra
 Powerful live chat software that helps to increase revenue and collect feedback providing an easy way for website owners to talk to visitors in real time.
 
-- [Get a account now](https://app.chatra.io/?enroll=&partnerId=eM2oGJzP3nzFXc4ua)
+- [Get an account now](https://app.chatra.io/?enroll=&partnerId=eM2oGJzP3nzFXc4ua)
 - [Read more about getting started with Chatra](https://chatra.io/help/?enroll=&partnerId=eM2oGJzP3nzFXc4ua)
 
 ## Installation
