@@ -49,6 +49,10 @@ It's possible to override any of the [default settings](https://app.chatra.io/se
 
 ## Chatra Changelog
 
+### 1.0.1 -- 2017.04.04
+
+* Renamed `chatraId` to `publicApiKey`
+
 ### 1.0.0 -- 2017.04.02
 
 * Initial release

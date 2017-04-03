@@ -67,9 +67,9 @@ class ChatraService extends BaseApplicationComponent
     public function getWidgetCode ($settings = [ ])
     {
         $oldPath  = craft()->templates->getTemplatesPath();
-        $chatraId = $this->settings['chatraId'];
+        $publicApiKey = $this->settings['publicApiKey'];
 
-        if ( empty($chatraId) ) {
+        if ( empty($publicApiKey) ) {
             return null;
         }
 
@@ -89,7 +89,7 @@ class ChatraService extends BaseApplicationComponent
 
         try {
             $widget = craft()->templates->render('Chatra_Widget', array(
-                'chatraId'    => $chatraId,
+                'publicApiKey'    => $publicApiKey,
                 'chatraSetup' => TemplateHelper::getRaw(json_encode($chatraSetup)),
             ));
         }
@@ -105,12 +105,13 @@ class ChatraService extends BaseApplicationComponent
 
     public function getUserPane ($context)
     {
-        $chatraId = $this->settings['chatraId'];
+        $publicApiKey = $this->settings['publicApiKey'];
         $user     = $context['account'];
         $clientId = $this->getClientIdForUser($user, $createIfNotExisting = false);
 
+        // TODO: Add secretApiKey
         $pane = craft()->templates->render('chatra/Chatra_UserPane', array(
-            'chatraId' => $chatraId,
+            'publicApiKey' => $publicApiKey,
             'clientId' => $clientId,
         ));
 
