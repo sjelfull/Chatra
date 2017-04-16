@@ -13,20 +13,38 @@
 #}
 {% import "_includes/forms" as forms %}
 
-<div class="pane chatra-user-pane">
-    <h3>Chatra</h3>
-    {% if clientId %}
-        <p>Send message to user</p>
+{% includeCssResource "chatra/css/Chatra_Style.css" %}
+{% includeJsResource "chatra/js/Chatra_Script.js" %}
 
+<div class="pane chatra-user-pane">
+    <h3>Send message to user with Chatra</h3>
+    {% if clientId %}
         <form action="" id="js-chatraMessageForm" class="chatra-form">
+            <input type="hidden" name="action" value="chatra/sendMessageToUser">
+            <input type="hidden" name="clientId" value="{{ clientId }}">
+
             {{ forms.textField({
                 label: "Message"|t,
                 instructions: '',
-                id: 'chatraMessage',
+                id: 'js-chatraMessage',
                 name: 'chatraMessage',
             }) }}
 
-            <input type="submit" class="btn" value="{{ 'Send message'|t }}">
+            {% if agents | length %}
+                {{ forms.selectField({
+                    label: 'Agent',
+                    instructions: 'Select which agent should be the sender',
+                    id: 'agentId',
+                    name: 'agentId',
+                    options: agents }) }}
+            {% else %}
+                <p>You need to add one or more agents to use this feature.</p>
+            {% endif %}
+
+            <div class="chatra-submit">
+                <input type="submit" class="btn" value="{{ 'Send message'|t }}">
+                <p class="chatra-success" id="js-chatraSuccess">Message was sent.</p>
+            </div>
         </form>
     {% else %}
         <p>The user doesn't have a associated Chatra client id yet.</p>

@@ -31,7 +31,6 @@ class ChatraPlugin extends BasePlugin
             }
         });
 
-        /* TODO: Will support sending message to user as soon as Chatra give me a way to get agents from the API
         craft()->templates->hook('cp.users.edit.right-pane', function (&$context) {
             if ( craft()->request->isCpRequest() ) {
 
@@ -40,7 +39,6 @@ class ChatraPlugin extends BasePlugin
                 return $pane;
             }
         });
-        */
     }
 
     /**
@@ -115,6 +113,7 @@ class ChatraPlugin extends BasePlugin
         return array(
             'publicApiKey' => [ AttributeType::String, 'label' => 'Public API key', 'default' => '' ],
             'secretApiKey' => [ AttributeType::String, 'label' => 'Secret API key', 'default' => '' ],
+            'agents'       => [ AttributeType::Mixed, 'label' => 'Agents', 'default' => '' ],
         );
     }
 

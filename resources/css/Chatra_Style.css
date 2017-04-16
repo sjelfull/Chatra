@@ -12,3 +12,25 @@
 .chatra-user-pane {
     background-color: #fff;
 }
+
+.chatra-success {
+    position: absolute;
+    left: 120px;
+    top: 50%;
+    margin-left: 10px;
+    color: #00d400;
+    margin: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(0, -50%);
+    transition: opacity .5s ease-in-out, visibility .5s ease-in-out;
+}
+
+.chatra-success.is-visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.chatra-submit {
+    position: relative;
+}

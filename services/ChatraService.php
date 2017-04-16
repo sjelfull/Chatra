@@ -66,8 +66,8 @@ class ChatraService extends BaseApplicationComponent
      */
     public function getWidgetCode ($settings = [ ])
     {
-        $oldPath  = craft()->templates->getTemplatesPath();
-        $publicApiKey = $this->settings['publicApiKey'];
+        $oldPath      = craft()->templates->getTemplatesPath();
+        $publicApiKey = $this->getPublicApiKey();
 
         if ( empty($publicApiKey) ) {
             return null;
@@ -89,8 +89,8 @@ class ChatraService extends BaseApplicationComponent
 
         try {
             $widget = craft()->templates->render('Chatra_Widget', array(
-                'publicApiKey'    => $publicApiKey,
-                'chatraSetup' => TemplateHelper::getRaw(json_encode($chatraSetup)),
+                'publicApiKey' => $publicApiKey,
+                'chatraSetup'  => TemplateHelper::getRaw(json_encode($chatraSetup)),
             ));
         }
         catch (\Exception $e) {
@@ -106,13 +106,22 @@ class ChatraService extends BaseApplicationComponent
     public function getUserPane ($context)
     {
         $publicApiKey = $this->settings['publicApiKey'];
-        $user     = $context['account'];
-        $clientId = $this->getClientIdForUser($user, $createIfNotExisting = false);
+        $secretApiKey = $this->settings['secretApiKey'];
+        $agents       = array_map(function ($row) {
+            return [
+                'label' => $row[0],
+                'value' => $row[1],
+            ];
+        }, $this->settings['agents']);
+        $user         = $context['account'];
+        $clientId     = $this->getClientIdForUser($user, $createIfNotExisting = false);
 
         // TODO: Add secretApiKey
         $pane = craft()->templates->render('chatra/Chatra_UserPane', array(
             'publicApiKey' => $publicApiKey,
-            'clientId' => $clientId,
+            'secretApiKey' => $secretApiKey,
+            'clientId'     => $clientId,
+            'agents'       => $agents,
         ));
 
         return $pane;
@@ -146,7 +155,35 @@ class ChatraService extends BaseApplicationComponent
         return $clientId;
     }
 
-    public function getClientIdForUser (UserModel $user, $createIfNotExisting = true)
+    public function sendMessageToUser ($clientId, $message, $agentId)
+    {
+        $postData = [
+            'clientId' => $clientId,
+            'agentId'  => $agentId,
+            'text'     => $message,
+        ];
+
+        try {
+            $client = new \Guzzle\Http\Client('https://app.chatra.io');
+            $uri    = '/api/messages/';
+            $data   = json_encode($postData);
+
+            $request = $client->post($uri, array(
+                'Content-Type'  => 'application/json',
+                'Authorization' => 'Chatra.Simple ' . $this->getPublicApiKey() . ':' . $this->getSecretApiKey(),
+            ));
+
+            $request->setBody($data);
+            $response = $request->send();
+
+            return true;
+        }
+        catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    private function getClientIdForUser (UserModel $user, $createIfNotExisting = true)
     {
         $clientRecord = ChatraRecord::model()->findByAttributes(array( 'userId' => $user->id ));
         $userId       = $user->id;
@@ -233,6 +270,16 @@ class ChatraService extends BaseApplicationComponent
         $clientId = StringHelper::randomString(26);
 
         return $clientId;
+    }
+
+    public function getPublicApiKey ()
+    {
+        return $this->settings['publicApiKey'];
+    }
+
+    public function getSecretApiKey ()
+    {
+        return $this->settings['secretApiKey'];
     }
 
 }

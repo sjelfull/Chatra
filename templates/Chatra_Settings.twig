@@ -31,6 +31,17 @@
     name: 'secretApiKey',
     value: settings['secretApiKey']}) }}
 
+{{ forms.editableTableField({
+    label: 'Agents',
+    instructions: 'Get your Chatra Agent IDs from [the control panel](https://app.chatra.io/settings/agents?enroll=&partnerId=eM2oGJzP3nzFXc4ua)',
+    id:     'agents',
+    name:   'agents',
+    cols: [
+        { 'heading' : 'Agent name', type: 'singleline' },
+        { 'heading' : 'Agent ID', type: 'singleline' },
+    ],
+    rows: settings['agents']}) }}
+
 {#
 {{ forms.lightswitchField({
     label: 'Create client ID for logged in user',
