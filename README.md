@@ -44,10 +44,13 @@ It's possible to override any of the [default settings](https://app.chatra.io/se
 
 ## Roadmap
 
-- Make it possible to send Craft users messages through the control panel
 - Add Commerce stats (order #, LTV, etc.) to users
 
 ## Chatra Changelog
+
+### 1.0.2 -- 2017.04.16
+
+* Added section to send user messages through the CP
 
 ### 1.0.1 -- 2017.04.04
 
